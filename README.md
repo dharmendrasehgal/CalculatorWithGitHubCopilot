@@ -16,7 +16,7 @@ A clean, modern calculator built with React, Tailwind CSS, Redux Toolkit, and Vi
 ## Setup
 1. Open a terminal in the project folder:
    ```bash
-   cd "c:\Users\dharmendra.sehgal\ws\IGP\Practice\AI\CalculatorWithGitHubCopilot"
+   cd "CalculatorWithGitHubCopilot"
    ```
 2. Install dependencies:
    ```bash
