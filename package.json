@@ -1,5 +1,6 @@
 {
   "name": "calculator-with-github-copilot",
+  "homepage": "https://dharmendrasehgal.github.io/CalculatorWithGitHubCopilot",
   "private": true,
   "version": "0.1.0",
   "type": "module",
