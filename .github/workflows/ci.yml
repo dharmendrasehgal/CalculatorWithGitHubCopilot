@@ -1,0 +1,43 @@
+# ===========================================
+# CI Pipeline - Runs on every push and PR
+# ===========================================
+# This is your first GitHub Actions workflow!
+# It automatically tests your code whenever you push
+
+name: CI Pipeline
+
+#Trigger
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+# JOBS
+jobs:
+  # Job 1: Run tests
+  test:
+    name: Run Test Nodes
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Get the code
+      - name: Checkout Github code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js
+      - name: Setup Node.js
+        uses: action/setup-node@v4
+        with:
+            node-version: '20'
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Step 4: Run linting
+      - name: Run Linter
+        run: npm run lint
+
+      # Step 5: Run Test
+      - name: Run Test
+        run: npm run test
