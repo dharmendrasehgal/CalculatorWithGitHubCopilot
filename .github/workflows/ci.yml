@@ -41,3 +41,60 @@ jobs:
       # Step 5: Run Test
       - name: Run Test
         run: npm run test
+
+  # Job 2: Build the project
+  build:
+      name: Build Project
+      runs-on:
+        - ubuntu-latest
+        - windows-latest
+        - macos-latest
+      needs: test
+
+      steps:
+        # Step 1: Get the code
+        - name: Checkout Github code
+          uses: actions/checkout@v4
+  
+        # Step 2: Set up Node.js
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+              node-version: '20'
+
+        # CACHING: Store node_modules between runs
+        - name: Cache node modules
+          uses: actions/cache@v4
+          id: cache-npm
+          with:
+            # What to cache
+            path: ~/.npm
+            # Cache key (changes when package-lock.json changes)
+            key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+            # Fallback keys
+            restore-keys: |
+              ${{ runner.os }}-npm-
+  
+        # Show cache status
+        - name: Cache status
+          run: |
+            if [ "${{ steps.cache-npm.outputs.cache-hit }}" == "true" ]; then
+              echo "Cache HIT - using cached dependencies"
+            else
+              echo "Cache MISS - will cache after install"
+            fi
+  
+        # Step 3: Install dependencies
+        - name: Install Dependencies
+          run: npm install
+  
+        # Step 4: Run Buils
+        - name: Build
+          run: npm run build
+  
+        # Step 5: Upload build artifects
+        - name: Upload build artifects
+          uses: actions/upload-artifact@v4
+          with:
+            name: build-files
+            path: dist/
